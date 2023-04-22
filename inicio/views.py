@@ -12,6 +12,9 @@ def mi_vista(request):
 def about(request):
     return render(request, 'inicio/about.html')
 
+def registro_exitoso(request):
+    return render(request, 'inicio/registro_exitoso.html')
+
 def registrar_vehiculo(request):
     
     if request.method == "POST":
