@@ -1,0 +1,34 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Vehiculo</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1>Listado de vehiculos</h1>
+{% endblock h1_header %}
+
+
+{% block contenido %}
+<p>
+    <form action={% url 'inicio:lista_vehiculos' %}>
+        {{formulario}}
+        <button>Buscar</button>
+    </form>
+</p>
+
+{% if vehiculos %}
+    {% for vehiculo in vehiculos %}
+    <table>
+        <tr>
+            Marca: {{vehiculo.marca}}&nbsp;&nbsp;&nbsp;&nbsp;
+            Modelo: {{vehiculo.modelo}}&nbsp;&nbsp;&nbsp;&nbsp;
+            Kilometros: {{vehiculo.kilometraje}}&nbsp;&nbsp;&nbsp;&nbsp;
+        </tr>
+    <table/>
+    {% endfor %}
+
+{% else %}
+    <h2>No hay existencias de ese modelo.</h2>
+{% endif %}
+{% endblock contenido %}
