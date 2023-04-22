@@ -51,7 +51,7 @@ def lista_vehiculos(request):
 
 def eliminar_vehiculo(request):
     if request.method == 'POST':
-        id_vehiculo = request.POST.get('id_vehiculo')
+        id_vehiculo = request.POST.get('id_vehiculo', None)
         vehiculo = Vehiculo.objects.get(id=id_vehiculo)
         vehiculo.delete()
         return redirect('inicio:lista_vehiculos')
@@ -64,10 +64,11 @@ def editar_vehiculo(request, id_vehiculo):
         formulario = CreacionVehiculoFormulario(request.POST, instance=vehiculo)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, 'El vehículo se ha modificado exitosamente')
             return redirect('inicio:lista_vehiculos')
     else:
         formulario = CreacionVehiculoFormulario(instance=vehiculo)
-    return render(request, 'inicio/editar_vehiculo.html', {'formulario': formulario, 'id_vehiculo': id_vehiculo})
+    
+    contexto = {'formulario': formulario, 'id_vehiculo': id_vehiculo}
+    return render(request, 'inicio/editar_vehiculo.html', contexto)
 
 
