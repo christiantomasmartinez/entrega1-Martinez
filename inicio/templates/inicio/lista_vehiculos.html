@@ -24,6 +24,22 @@
             Marca: {{vehiculo.marca}}&nbsp;&nbsp;&nbsp;&nbsp;
             Modelo: {{vehiculo.modelo}}&nbsp;&nbsp;&nbsp;&nbsp;
             Kilometros: {{vehiculo.kilometraje}}&nbsp;&nbsp;&nbsp;&nbsp;
+            {% if request.user.is_superuser %}
+                <td>
+                    <form action="{% url 'inicio:eliminar_vehiculo' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id_vehiculo" value="{{ vehiculo.id }}">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'inicio:editar_vehiculo' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id_vehiculo" value="{{ vehiculo.id }}">
+                        <button type="submit">Editar</button>
+                    </form>
+                </td>
+            {% endif %}
         </tr>
     <table/>
     {% endfor %}

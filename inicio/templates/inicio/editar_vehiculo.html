@@ -1,0 +1,18 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Modificar vehículo</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1>Modificar vehículo</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+<form action="{% url 'inicio:editar_vehiculo' id_vehiculo %}" method="POST">
+    {% csrf_token %}
+    {{ formulario }}
+    <input type="hidden" name="id_vehiculo" value="{{ id_vehiculo }}">
+    <button>Guardar cambios</button>
+</form>
+{% endblock contenido %}

@@ -27,7 +27,7 @@
                 {% if request.user.is_authenticated %}
                 <a class="navbar-brand" href={% url 'usuarios:editar_perfil' %}>{{request.user.username}}</a>
                 <a class="btn btn-primary" href={% url 'usuarios:logout' %}>Logout</a>
-                {% if request.user.username == "flor" %}
+                {% if request.user.is_superuser %}
                 <a class="navbar-brand" href={% url 'inicio:registrar_vehiculo' %}>Agregar vehiculo</a>
                 {% endif %}
                 {% else %}
