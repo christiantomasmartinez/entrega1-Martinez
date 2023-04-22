@@ -58,27 +58,20 @@ def eliminar_vehiculo(request):
     else:
         return HttpResponseBadRequest('Método no permitido')
 
-def editar_vehiculo(request):
-    id_vehiculo = request.POST.get('id_vehiculo')
-    vehiculo = Vehiculo.objects.get(id=id_vehiculo)
+def editar_vehiculo(request, id_vehiculo):
+    vehiculo = get_object_or_404(Vehiculo, id=id_vehiculo)
+
     if request.method == 'POST':
-        formulario = CreacionVehiculoFormulario(request.POST)
+        formulario = CreacionVehiculoFormulario(request.POST, instance=vehiculo)
         if formulario.is_valid():
-            datos_correctos = formulario.cleaned_data
-            vehiculo.modelo = datos_correctos['modelo']
-            vehiculo.marca = datos_correctos['marca']
-            vehiculo.kilometraje = datos_correctos['kilometraje']
-            vehiculo.save()
+            formulario.save()
+            messages.success(request, 'El vehiculo ha sido editado correctamente')
             return redirect('inicio:lista_vehiculos')
+        else:
+            messages.error(request, 'Error al editar el vehiculo')
     else:
-        formulario = CreacionVehiculoFormulario(initial={
-            'modelo': vehiculo.modelo,
-            'marca': vehiculo.marca,
-            'kilometraje': vehiculo.kilometraje,
-        })
-    return render(request, 'inicio/editar_vehiculo.html', {
-        'formulario': formulario,
-        'id_vehiculo': id_vehiculo,
-    })
+        formulario = CreacionVehiculoFormulario(instance=vehiculo)
+
+    return render(request, 'inicio/editar_vehiculo.html', {'formulario': formulario, 'vehiculo': vehiculo})
 
 
