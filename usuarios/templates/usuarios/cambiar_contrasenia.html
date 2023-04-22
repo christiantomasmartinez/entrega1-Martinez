@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Cambiar Contrasenia</title>
+{% endblock title_head %}
+
+
+{% block h1_header %}
+<h1>Cambiar Contrasenia</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+
+{% if form.error %}
+<p>Formulario invalido</p>
+{% endif %}
+
+<form action={% url 'usuarios:cambiar_contrasenia' %} method="post">
+    {% csrf_token %}
+    <table>
+        {{form}}
+    </table>
+    <button>Cambiar</button>
+</form>
+{% endblock contenido %}

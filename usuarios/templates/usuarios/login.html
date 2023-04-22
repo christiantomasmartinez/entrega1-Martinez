@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Login</title>
+{% endblock title_head %}
+
+
+{% block h1_header %}
+<h1>Login</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+
+{% if form.error %}
+<p>Credenciales invalidas</p>
+{% endif %}
+
+
+<form action={% url 'usuarios:login' %} method="post">
+    {% csrf_token %}
+    <table>
+        {{form}}
+    </table>
+    <button>Loguearse</button>
+</form>
+{% endblock contenido %}

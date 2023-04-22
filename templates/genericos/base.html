@@ -23,10 +23,17 @@
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 <a class="navbar-brand" href={% url 'inicio:inicio' %}>Inicio</a>
-                <a class="navbar-brand" href={% url 'inicio:registrar_comprador' %}>Registrar comprador</a>
-                <a class="navbar-brand" href={% url 'inicio:registrar_vendedor' %}>Registrar vendedor</a>
+                {% comment %} <a class="navbar-brand" href={% url 'inicio:registrar_comprador' %}>Registrar comprador</a>
+                <a class="navbar-brand" href={% url 'inicio:registrar_vendedor' %}>Registrar vendedor</a> {% endcomment %}
                 <a class="navbar-brand" href={% url 'inicio:registrar_vehiculo' %}>Agregar vehiculo</a>
                 <a class="navbar-brand" href={% url 'inicio:lista_vehiculos' %}>Buscar un vehiculo</a>
+                {% if request.user.is_authenticated %}
+                <a class="navbar-brand" href={% url 'usuarios:editar_perfil' %}>{{request.user.username}}</a>
+                <a class="btn btn-primary" href={% url 'usuarios:logout' %}>Logout</a>
+                {% else %}
+                <a class="btn btn-primary" href={% url 'usuarios:login' %}>Login</a>
+                <a class="btn btn-primary" href={% url 'usuarios:registro' %}>Registrarse</a>
+                {% endif %}
             </div>
         </nav>
         <!-- Masthead-->
@@ -54,7 +61,7 @@
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
                         <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="#!">About</a></li>
+                            <li class="list-inline-item"><a href={% url 'inicio:about' %}>About</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-end my-auto">

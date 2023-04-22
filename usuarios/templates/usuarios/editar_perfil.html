@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Editar perfil</title>
+{% endblock title_head %}
+
+
+{% block h1_header %}
+<h1>Editar perfil</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+
+{% if form.error %}
+<p>Formulario invalido</p>
+{% endif %}
+
+<form action={% url 'usuarios:editar_perfil' %} method="post" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <table>
+        {{form}}
+    </table>
+    <button type='button'><a href={% url 'usuarios:cambiar_contrasenia' %}>Cambiar Contrasenia</a></button>
+    <button>Editar</button>
+</form>
+{% endblock contenido %}
