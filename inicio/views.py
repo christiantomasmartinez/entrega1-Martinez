@@ -1,11 +1,10 @@
 from django.http import HttpResponse
 from django.http import HttpResponseBadRequest
-from django.template import Template, Context, loader
+from django.template import Template, Context, loader, RequestContext
 from inicio.models import Vehiculo
 from django.shortcuts import render, redirect
 from inicio.forms import CreacionVehiculoFormulario, BuscarAuto
 from django.contrib import messages
-from django.shortcuts import get_object_or_404, redirect
 
 
 def mi_vista(request):
@@ -58,17 +57,55 @@ def eliminar_vehiculo(request):
     else:
         return HttpResponseBadRequest('Método no permitido')
 
-def editar_vehiculo(request, id_vehiculo):
-    vehiculo = get_object_or_404(Vehiculo, id=id_vehiculo)
-    if request.method == 'POST':
-        formulario = CreacionVehiculoFormulario(request.POST, instance=vehiculo)
-        if formulario.is_valid():
-            formulario.save()
+def editar_vehiculo (request, id_vehiculo):
+    p = Vehiculo.objects.get(pk=id_vehiculo)
+    if request.method == "POST":
+        form = CreacionVehiculoFormulario(request.POST,instance=p)
+        if form.is_valid():
+            p.modelo = request.POST['nuevo_modelo']
+            p.marca = request.POST['nuevo_marca']
+            p.kilometraje = request.POST['nuevo_kilometraje']
+            p.save()
             return redirect('inicio:lista_vehiculos')
+        else : 
+            form = CreacionVehiculoFormulario(instance=p)
+            contexto = {'formulario' : form}
+            return render("inicio/editar_vehiculo.html", contexto, context_instance=RequestContext(request))
     else:
-        formulario = CreacionVehiculoFormulario(instance=vehiculo)
+        form = CreacionVehiculoFormulario(instance=p) 
+
+        contexto = {'formulario' : form}
+
+    return render("inicio/editar_vehiculo.html", contexto, context_instance=RequestContext(request))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def editar_vehiculo(request):
+#     id_vehiculo = request.POST.get('id_vehiculo', None)
+#     vehiculo = Vehiculo.objects.get(id=id_vehiculo)
+#     if request.method == 'POST':
+#         formulario = CreacionVehiculoFormulario(request.POST, instance=vehiculo)
+#         if formulario.is_valid():
+#             formulario.save()
+#             return redirect('inicio:lista_vehiculos')
+#     else:
+#         formulario = CreacionVehiculoFormulario(instance=vehiculo)
     
-    contexto = {'formulario': formulario, 'id_vehiculo': id_vehiculo}
-    return render(request, 'inicio/editar_vehiculo.html', contexto)
+#     contexto = {'formulario': formulario, 'id_vehiculo': id_vehiculo}
+#     return render(request, 'inicio/editar_vehiculo.html', contexto)
 
 
