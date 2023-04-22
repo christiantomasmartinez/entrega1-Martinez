@@ -8,13 +8,12 @@
 <h1>Agregue el vehiculo</h1>
 {% endblock h1_header %}
 
-
 {% block contenido %}
-<form action={% url 'inicio:registro_exitoso' %} method="POST">
+<form action="{% url 'inicio:registrar_vehiculo' %}" method="POST">
     {% csrf_token %}
     <table>
-        {{formulario}}
+        {{ formulario.as_table }}
     </table>
-    <button>Agregar vehiculo</button>
+    <button type="submit">Agregar vehiculo</button>
 </form>
 {% endblock contenido %}

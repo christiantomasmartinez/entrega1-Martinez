@@ -3,6 +3,7 @@ from django.template import Template, Context, loader
 from inicio.models import Vehiculo
 from django.shortcuts import render, redirect
 from inicio.forms import CreacionVehiculoFormulario, BuscarAuto
+from django.contrib import messages
 
 
 
@@ -16,19 +17,25 @@ def registro_exitoso(request):
     return render(request, 'inicio/registro_exitoso.html')
 
 def registrar_vehiculo(request):
-    
     if request.method == "POST":
         formulario = CreacionVehiculoFormulario(request.POST)
         
         if formulario.is_valid():
             datos_correctos = formulario.cleaned_data
         
-            vehiculo = Vehiculo(modelo=datos_correctos['modelo'], marca=datos_correctos['marca'], kilometraje=datos_correctos["kilometraje"])
+            vehiculo = Vehiculo(
+                modelo=datos_correctos['modelo'], 
+                marca=datos_correctos['marca'], 
+                kilometraje=datos_correctos["kilometraje"]
+            )
             vehiculo.save()
-
-            return redirect('inicio:registrar_vehiculo')
+            messages.success(request, 'Vehículo registrado correctamente.')
+            return redirect('inicio:registro_exitoso')
+        else:
+            messages.error(request, 'Error al procesar el formulario.')
+    else:
+        formulario = CreacionVehiculoFormulario()
     
-    formulario = CreacionVehiculoFormulario()
     return render(request, 'inicio/registrar_vehiculo.html', {'formulario': formulario})
 
 def lista_vehiculos(request):
