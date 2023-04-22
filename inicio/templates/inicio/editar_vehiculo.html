@@ -12,7 +12,7 @@
 <form action="{% url 'inicio:editar_vehiculo' id_vehiculo %}" method="POST">
     {% csrf_token %}
     {{ formulario }}
-    <input type="hidden" name="id_vehiculo" value="{{ formulario }}">
+    <input type="hidden" name="id_vehiculo" value="{{ id_vehiculo }}">
     <button>Guardar cambios</button>
 </form>
 {% endblock contenido %}

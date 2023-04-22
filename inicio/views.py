@@ -60,18 +60,14 @@ def eliminar_vehiculo(request):
 
 def editar_vehiculo(request, id_vehiculo):
     vehiculo = get_object_or_404(Vehiculo, id=id_vehiculo)
-
     if request.method == 'POST':
         formulario = CreacionVehiculoFormulario(request.POST, instance=vehiculo)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, 'El vehiculo ha sido editado correctamente')
+            messages.success(request, 'El vehículo se ha modificado exitosamente')
             return redirect('inicio:lista_vehiculos')
-        else:
-            messages.error(request, 'Error al editar el vehiculo')
     else:
         formulario = CreacionVehiculoFormulario(instance=vehiculo)
-
-    return render(request, 'inicio/editar_vehiculo.html', {'formulario': formulario, 'vehiculo': vehiculo})
+    return render(request, 'inicio/editar_vehiculo.html', {'formulario': formulario, 'id_vehiculo': id_vehiculo})
 
 
