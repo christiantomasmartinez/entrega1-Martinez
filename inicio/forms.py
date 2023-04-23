@@ -1,10 +1,7 @@
 from django import forms
+from .models import Vehiculo
 
-
-class CreacionVehiculoFormulario(forms.Form):
-    modelo = forms.CharField(max_length=20)
-    marca = forms.CharField(max_length=20)
-    kilometraje = forms.IntegerField()
-
-class BuscarAuto(forms.Form):
-    modelo = forms.CharField(max_length=20, required=False)
+class VehiculoForm(forms.ModelForm):
+    class Meta:
+        model = Vehiculo
+        fields = ('marca', 'modelo', 'anio')
