@@ -4,6 +4,7 @@ from django.template import Template, Context, loader, RequestContext
 from inicio.models import Vehiculo
 from django.shortcuts import render, redirect, get_object_or_404
 from inicio.forms import VehiculoForm
+from django.contrib.auth.decorators import user_passes_test
 
 
 def mi_vista(request):
@@ -16,6 +17,7 @@ def lista_vehiculos(request):
     vehiculos = Vehiculo.objects.all()
     return render(request, 'inicio/lista_vehiculos.html', {'vehiculos': vehiculos})
 
+@user_passes_test(lambda u: u.is_superuser)
 def agregar_vehiculo(request):
     if request.method == 'POST':
         formulario = VehiculoForm(request.POST)
@@ -26,6 +28,7 @@ def agregar_vehiculo(request):
         formulario = VehiculoForm()
     return render(request, 'inicio/agregar_vehiculo.html', {'formulario': formulario})
 
+@user_passes_test(lambda u: u.is_superuser)
 def editar_vehiculo(request, id_vehiculo):
     vehiculo = get_object_or_404(Vehiculo, id=id_vehiculo)
     if request.method == 'POST':
@@ -37,6 +40,7 @@ def editar_vehiculo(request, id_vehiculo):
         formulario = VehiculoForm(instance=vehiculo)
     return render(request, 'inicio/editar_vehiculo.html', {'formulario': formulario, 'id_vehiculo': id_vehiculo})
 
+@user_passes_test(lambda u: u.is_superuser)
 def eliminar_vehiculo(request, id_vehiculo):
     vehiculo = get_object_or_404(Vehiculo, id=id_vehiculo)
     if request.method == 'POST':

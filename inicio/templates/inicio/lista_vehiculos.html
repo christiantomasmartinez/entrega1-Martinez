@@ -24,13 +24,18 @@
                     <td>{{ vehiculo.marca }}</td>
                     <td>{{ vehiculo.modelo }}</td>
                     <td>{{ vehiculo.anio }}</td>
+                    {% if request.user.is_superuser %}
                     <td>
-                        <a href="{% url 'inicio:editar_vehiculo' vehiculo.pk %}">Editar</a>
+                        <form action="{% url 'inicio:editar_vehiculo' vehiculo.pk %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit">Editar</button>
+                        </form>
                         <form action="{% url 'inicio:eliminar_vehiculo' vehiculo.pk %}" method="POST" style="display: inline;">
                             {% csrf_token %}
                             <button type="submit">Eliminar</button>
                         </form>
                     </td>
+                    {% endif %}
                 </tr>
             {% empty %}
                 <tr>
@@ -39,7 +44,5 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <a href="{% url 'inicio:agregar_vehiculo' %}">Agregar vehículo</a>
 
 {% endblock contenido %}
