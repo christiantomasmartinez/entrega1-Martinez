@@ -57,56 +57,29 @@ def eliminar_vehiculo(request):
     else:
         return HttpResponseBadRequest('Método no permitido')
 
-def editar_vehiculo (request):
-    id_vehiculo = request.POST.get('id_vehiculo', None)
-    p = Vehiculo.objects.get(id=id_vehiculo)
-    if request.method == "POST":
-        form = CreacionVehiculoFormulario(request.POST)
-        if form.is_valid():
-            p.modelo = request.POST['nuevo_modelo']
-            p.marca = request.POST['nuevo_marca']
-            p.kilometraje = request.POST['nuevo_kilometraje']
-            p.save()
-            return redirect('inicio:lista_vehiculos')
-        else : 
-            form = CreacionVehiculoFormulario()
-            contexto = {'formulario' : form}
-            return render("inicio/editar_vehiculo.html", form)
-    else:
-        form = CreacionVehiculoFormulario() 
+from django.shortcuts import get_object_or_404
 
-        contexto = {'formulario' : form}
-
-    return render("inicio/editar_vehiculo.html", form)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def editar_vehiculo(request):
-#     id_vehiculo = request.POST.get('id_vehiculo', None)
-#     vehiculo = Vehiculo.objects.get(id=id_vehiculo)
-#     if request.method == 'POST':
-#         formulario = CreacionVehiculoFormulario(request.POST, instance=vehiculo)
-#         if formulario.is_valid():
-#             formulario.save()
-#             return redirect('inicio:lista_vehiculos')
-#     else:
-#         formulario = CreacionVehiculoFormulario(instance=vehiculo)
+def editar_vehiculo(request, id_vehiculo):
+    vehiculo = get_object_or_404(Vehiculo, id=id_vehiculo)
+    formulario = CreacionVehiculoFormulario(initial={"modelo":"GOT"})
     
-#     contexto = {'formulario': formulario, 'id_vehiculo': id_vehiculo}
-#     return render(request, 'inicio/editar_vehiculo.html', contexto)
-
-
+    if request.method == "POST":
+        formulario = CreacionVehiculoFormulario(request.POST)
+        
+        if formulario.is_valid():
+            vehiculo = Vehiculo()
+            
+            vehiculo.marca = formulario.cleaned_data["marca"]
+            vehiculo.modelo = formulario.cleaned_data["modelo"]
+            vehiculo.kilometraje = formulario.cleaned_data["kilometraje"]
+            
+            vehiculo.save()
+            
+            messages.success(request, 'Vehículo registrado correctamente.')
+            return redirect('inicio:registro_exitoso')
+        else:
+            messages.error(request, 'Error al procesar el formulario.')
+    else:
+        formulario = CreacionVehiculoFormulario()
+    
+    return render(request, 'inicio/registrar_vehiculo.html', {'formulario': formulario})

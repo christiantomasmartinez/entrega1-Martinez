@@ -9,10 +9,9 @@
 {% endblock h1_header %}
 
 {% block contenido %}
-<form action="{% url 'inicio:editar_vehiculo' id_vehiculo %}" method="POST">
+<form action="{% url 'inicio:editar_vehiculo' vehiculo.id %}" method="POST">
     {% csrf_token %}
-    {{ formulario }}
-    <input type="hidden" name="id_vehiculo" value="{{ id_vehiculo }}">
-    <button>Guardar cambios</button>
+    {{ formulario.as_p }}
+    <button type="submit">Guardar</button>
 </form>
 {% endblock contenido %}

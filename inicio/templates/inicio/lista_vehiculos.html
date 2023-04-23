@@ -33,11 +33,12 @@
                     </form>
                 </td>
                 <td>
-                    <form action="{% url 'inicio:editar_vehiculo' %}" method="POST">
+                    <form action="{% url 'inicio:editar_vehiculo' vehiculo.id %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="id_vehiculo" value="{{ vehiculo.id }}">
                         <button type="submit">Editar</button>
                     </form>
+                    {% comment %} <a href="{% url "inicio:editar_vehiculo" p.id%}" {% endcomment %}
                 </td>
             {% endif %}
         </tr>
