@@ -36,8 +36,8 @@
                 {% endif %}
                 {% if user.is_authenticated %}
                     <div class="user-info">
-                        {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" alt="{{ user.username }} avatar">
+                        {% if user.infoextra.avatar %}
+                            <img src="{{ user.infoextra.avatar.url }}" alt="{{ user.username }} avatar">
                         {% endif %}
                         <span>{{ user.username }}</span>
                     </div>
