@@ -1,0 +1,26 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+
+  <title>Lista de Quejas</title>
+{% endblock title_head %}
+{% block h1_header %}
+
+  <h1>Lista de Quejas</h1>
+{% endblock h1_header %}
+{% block contenido %}
+
+  <ul>
+    {% for queja in quejas %}
+      <li>
+        {% if queja.nombre_usuario %}
+          <strong>Usuario:</strong> {{ queja.nombre_usuario }}<br>
+        {% endif %}
+        <strong>Fecha de creación:</strong> {{ queja.fecha_creacion|date:"d/m/Y" }}<br>
+        <strong>Queja:</strong> {{ queja.queja }}<br>
+      </li>
+    {% empty %}
+      <li>No hay quejas.</li>
+    {% endfor %}
+  </ul>
+{% endblock contenido %}

@@ -53,7 +53,7 @@
                         <div class="text-center text-white">
                             <!-- Page heading-->
                             {% block h1_header %}
-                            <h1 class="mb-5">Estas usando el h1 base</h1>
+                            <h1 class="mb-5">Bienvenidos a la concesionaria Pepito</h1>
                             {% endblock h1_header %}
                         </div>
                     </div>
@@ -68,22 +68,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-                        <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href={% url 'inicio:about' %}>About</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-facebook fs-3"></i></a>
-                            </li>
-                            <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-twitter fs-3"></i></a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#!"><i class="bi-instagram fs-3"></i></a>
-                            </li>
-                        </ul>
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="list-inline-item" href={% url 'inicio:agregar_queja' %}>Agregar Queja</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="list-inline-item" href={% url 'inicio:lista_quejas' %}>Lista Quejas</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="list-inline-item" href={% url 'inicio:about' %}>About</a>
+                        </li>
                     </div>
                 </div>
             </div>

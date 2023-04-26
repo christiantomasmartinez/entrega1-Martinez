@@ -1,9 +1,8 @@
-from django.http import HttpResponse
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.template import Template, Context, loader, RequestContext
-from inicio.models import Vehiculo
+from inicio.models import Vehiculo, Queja
 from django.shortcuts import render, redirect, get_object_or_404
-from inicio.forms import VehiculoForm
+from inicio.forms import VehiculoForm, QuejaForm
 from django.contrib.auth.decorators import user_passes_test
 
 
@@ -47,3 +46,20 @@ def eliminar_vehiculo(request, id_vehiculo):
         vehiculo.delete()
         return redirect('inicio:lista_vehiculos')
     return render(request, 'inicio/eliminar_vehiculo.html', {'vehiculo': vehiculo})
+
+def lista_quejas(request):
+    quejas = Queja.objects.all()
+    return render(request, 'inicio/lista_quejas.html', {'quejas': quejas})
+
+
+def agregar_queja(request):
+    if request.method == 'POST':
+        form = QuejaForm(request.POST)
+        if form.is_valid():
+            queja = form.save(commit=False)
+            queja.save()
+            return redirect('inicio:lista_quejas')
+    else:
+        form = QuejaForm()
+    context = {'form': form}
+    return render(request, 'inicio/agregar_queja.html', context)

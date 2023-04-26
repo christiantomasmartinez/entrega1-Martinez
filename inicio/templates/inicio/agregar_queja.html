@@ -1,0 +1,26 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Agregar Queja</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1>Agregar Queja</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+<form method="POST">
+  {% csrf_token %}
+  {% if not user.is_authenticated %}
+    <div>
+      <label for="nombre_usuario">Nombre de Usuario (opcional):</label>
+      <input type="text" id="nombre_usuario" name="nombre_usuario">
+    </div>
+  {% endif %}
+  <div>
+    <label for="queja">Queja:</label>
+    <textarea id="queja" name="queja" required></textarea>
+  </div>
+  <button type="submit">Enviar</button>
+</form>
+{% endblock contenido %}

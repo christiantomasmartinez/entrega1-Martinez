@@ -9,3 +9,7 @@ class Vehiculo(models.Model):
 
     def __str__(self):
         return f"{self.marca} {self.modelo} ({self.anio})"
+
+class Queja(models.Model):
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    queja = models.TextField()
