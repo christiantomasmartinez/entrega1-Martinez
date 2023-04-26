@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.template import Template, Context, loader, RequestContext
 from inicio.models import Vehiculo, Queja
 from django.shortcuts import render, redirect, get_object_or_404
-from inicio.forms import VehiculoForm, QuejaForm
+from inicio.forms import VehiculoForm, QuejaForm, BusquedaVehiculoForm
 from django.contrib.auth.decorators import user_passes_test
 
 
@@ -14,7 +14,25 @@ def about(request):
 
 def lista_vehiculos(request):
     vehiculos = Vehiculo.objects.all()
-    return render(request, 'inicio/lista_vehiculos.html', {'vehiculos': vehiculos})
+    form = BusquedaVehiculoForm(request.GET)
+    if form.is_valid():
+        marca = form.cleaned_data['marca']
+        modelo = form.cleaned_data['modelo']
+        anio = form.cleaned_data['anio']
+        
+        if marca:
+            vehiculos = vehiculos.filter(marca__icontains=marca)
+        if modelo:
+            vehiculos = vehiculos.filter(modelo__icontains=modelo)
+        if anio:
+            vehiculos = vehiculos.filter(anio=anio)
+    
+    context = {
+        'form': form,
+        'vehiculos': vehiculos,
+    }
+    return render(request, 'inicio/lista_vehiculos.html', context)
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def agregar_vehiculo(request):
