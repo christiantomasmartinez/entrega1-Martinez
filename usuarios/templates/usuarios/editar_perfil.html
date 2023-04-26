@@ -10,17 +10,17 @@
 {% endblock h1_header %}
 
 {% block contenido %}
-
-{% if form.error %}
+{% if form.errors %}
 <p>Formulario invalido</p>
 {% endif %}
 
-<form action={% url 'usuarios:editar_perfil' %} method="post" enctype='multipart/form-data'>
+<form action="{% url 'usuarios:editar_perfil' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
-        {{form}}
+        {{ form.as_table }}
     </table>
-    <button type='button'><a href={% url 'usuarios:cambiar_contrasenia' %}>Cambiar Contrasenia</a></button>
-    <button>Editar</button>
+    <button type="button"><a href="{% url 'usuarios:cambiar_contrasenia' %}">Cambiar Contraseña</a></button>
+    <button type="submit">Editar</button>
 </form>
+
 {% endblock contenido %}
