@@ -35,14 +35,13 @@
                 <a class="btn btn-primary" href={% url 'usuarios:registro' %}>Registrarse</a>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    <div class="user-info">
-                        {% if user.infoextra.avatar %}
-                            <img src="{{ page.author.profile.avatar.url }}">
-                            <img src="{{ request.infoextra.avatar.url }}" alt="{{ user.username }} avatar">
-                        {% endif %}
-                        <span>{{ user.username }}</span>
-                    </div>
-                {% endif %}
+                <div class="user-info">
+                    {% if user.infoextra.avatar %}
+                        <img src="{{ user.infoextra.avatar.url }}" alt="{{ user.username }} avatar">
+                    {% endif %}
+                    <span>{{ user.username }}</span>
+                </div>
+            {% endif %}
             </div>
         </nav>
         <!-- Masthead-->
