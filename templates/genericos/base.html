@@ -24,18 +24,18 @@
             <div class="container">
                 <a class="navbar-brand" href={% url 'inicio:inicio' %}>Inicio</a>
                 <a class="navbar-brand" href={% url 'inicio:lista_vehiculos' %}>Buscar un vehiculo</a>
-                {% if request.user.is_authenticated %}
                 {% if request.user.is_superuser %}
                 <a class="navbar-brand" href={% url 'inicio:agregar_vehiculo' %}>Agregar vehiculo</a>
-                <div class="user-info">
-                    {% if request.user.infoextra.avatar_thumbnail %}
-                    <img src="{{ request.user.infoextra.avatar_thumbnail.url }}" href="{% url 'usuarios:editar_perfil' %}>{{request.user.username}}" width="35" height="35">
-                    {% else %}
-                    <a class="navbar-brand" href={% url 'usuarios:editar_perfil' %}>{{request.user.username}}</a>
-                    {% endif %}
-                    <span>{{ request.user.username }}</span>
-                </div>
                 {% endif %}
+                {% if request.user.is_authenticated %}
+                <div class="user-info">
+                    <a class="navbar-brand" href={% url 'usuarios:editar_perfil' %}>Editar Perfil</a>
+                    {% if request.user.infoextra.avatar %}
+                    <img src="{{ request.user.infoextra.avatar.url }}" width="35" height="35">
+                    {% else %}
+                        <img src="{{ request.user.infoextra.avatar_thumbnail.url }}" width="35" height="35">
+                    {% endif %}
+                </div>
                 <a class="btn btn-primary" href={% url 'usuarios:logout' %}>Logout</a>
                 {% else %}
                 <a class="btn btn-primary" href={% url 'usuarios:login' %}>Login</a>

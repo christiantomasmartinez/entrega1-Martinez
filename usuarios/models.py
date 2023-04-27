@@ -16,4 +16,5 @@ class InfoExtra(models.Model):
             img = Image.open(self.avatar.path)
             output_size = (35, 35)
             img.thumbnail(output_size)
+            img.save(self.avatar.path)
             img.save(self.avatar_thumbnail.path)
