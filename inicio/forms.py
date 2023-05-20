@@ -4,7 +4,7 @@ from .models import Vehiculo, Queja
 class VehiculoForm(forms.ModelForm):
     class Meta:
         model = Vehiculo
-        fields = ('marca', 'modelo', 'anio')
+        fields = ('marca', 'modelo', 'anio', 'imagen', 'descripcion')
 
 class QuejaForm(forms.ModelForm):
     class Meta:

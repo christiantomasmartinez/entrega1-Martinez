@@ -9,7 +9,7 @@
 {% endblock h1_header %}
 
 {% block contenido %}
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ formulario.as_p }}
     <button type="submit">Guardar cambios</button>

@@ -1,0 +1,25 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+    <title>Detalle del Vehículo</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+    <h1>Detalle del Vehículo</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+    <div>
+        <h3>Marca: {{ vehiculo.marca }}</h3>
+        <h3>Modelo: {{ vehiculo.modelo }}</h3>
+        <h3>Año: {{ vehiculo.anio }}</h3>
+        {% if vehiculo.descripcion %}
+            <p>Descripción: {{ vehiculo.descripcion }}</p>
+        {% endif %}
+        {% if vehiculo.imagen %}
+            <img src="{{ vehiculo.imagen.url }}" alt="Imagen del vehículo" style="max-width: 750px;">
+        {% else %}
+            <p>No hay imagen disponible</p>
+        {% endif %}
+    </div>
+{% endblock contenido %}

@@ -6,8 +6,8 @@ from usuarios.models import InfoExtra
 
 class FormularioRegistro(UserCreationForm):
     email = forms.EmailField()
-    password1 = forms.CharField()
-    password2 = forms.CharField()
+    password1 = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = User
@@ -59,3 +59,15 @@ class EdicionPerfil(UserChangeForm):
             info_extra.avatar = self.cleaned_data.get('avatar')
         info_extra.save()
         return user
+
+class DescripcionForm(forms.ModelForm):
+    class Meta:
+        model = InfoExtra
+        fields = ['descripcion']
+        labels = {'descripcion': 'Descripción'}
+
+class EnlaceForm(forms.ModelForm):
+    class Meta:
+        model = InfoExtra
+        fields = ['enlace_pagina']
+        labels = {'enlace_pagina': 'Enlace a la página'}

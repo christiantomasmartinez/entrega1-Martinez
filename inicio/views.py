@@ -37,7 +37,7 @@ def lista_vehiculos(request):
 @user_passes_test(lambda u: u.is_superuser)
 def agregar_vehiculo(request):
     if request.method == 'POST':
-        formulario = VehiculoForm(request.POST)
+        formulario = VehiculoForm(request.POST, request.FILES)
         if formulario.is_valid():
             formulario.save()
             return redirect('inicio:lista_vehiculos')
@@ -49,7 +49,7 @@ def agregar_vehiculo(request):
 def editar_vehiculo(request, id_vehiculo):
     vehiculo = get_object_or_404(Vehiculo, id=id_vehiculo)
     if request.method == 'POST':
-        formulario = VehiculoForm(request.POST, instance=vehiculo)
+        formulario = VehiculoForm(request.POST, request.FILES, instance=vehiculo)
         if formulario.is_valid():
             formulario.save()
             return redirect('inicio:lista_vehiculos')
@@ -81,3 +81,7 @@ def agregar_queja(request):
         form = QuejaForm()
     context = {'form': form}
     return render(request, 'inicio/agregar_queja.html', context)
+
+def detalle_vehiculo(request, id_vehiculo):
+    vehiculo = get_object_or_404(Vehiculo, id=id_vehiculo)
+    return render(request, 'inicio/detalle_vehiculo.html', {'vehiculo': vehiculo})

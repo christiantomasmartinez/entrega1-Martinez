@@ -1,0 +1,21 @@
+{% extends 'genericos/base.html' %}
+
+{% block title %}Perfil - {{ perfil.user.username }}{% endblock %}
+
+{% block contenido %}
+<div>
+      {% if request.user.infoextra.avatar %}
+      <h2>Perfil de {{ perfil.user.username }} <img src="{{ perfil.avatar.url }}" alt="Foto de perfil"></h2>
+      {% else %}
+      <h2>Perfil de {{ perfil.user.username }}</h2>
+      {% endif %}
+    <p>Nombre: {{ perfil.user.first_name }} {{ perfil.user.last_name }}</p>
+    <p>Email: {{ perfil.user.email }}</p>
+    <p>Descripción: {{ perfil.descripcion }}</p>
+    <p>Enlace a la página: <a href="{{ perfil.enlace_pagina }}">{{ perfil.enlace_pagina }}</a></p>
+    {% if request.user == perfil.user %}
+      <a href="{% url 'usuarios:editar_descripcion' perfil.user.username %}" class="btn btn-primary">Editar Descripción</a>
+      <a href="{% url 'usuarios:editar_enlace' perfil.user.username %}" class="btn btn-primary">Editar Enlace</a>
+    {% endif %}
+  </div>
+{% endblock %}

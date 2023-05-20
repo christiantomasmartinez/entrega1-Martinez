@@ -9,7 +9,7 @@
 {% endblock h1_header %}
 
 {% block contenido %}
-<form action="{% url 'inicio:agregar_vehiculo' %}" method="POST">
+<form action="{% url 'inicio:agregar_vehiculo' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
         {{ formulario.as_table }}

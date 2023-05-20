@@ -30,6 +30,7 @@
                 {% if request.user.is_authenticated %}
                 <div class="user-info">
                     <a class="navbar-brand" href={% url 'usuarios:editar_perfil' %}>Editar Perfil</a>
+                    <a href="{% url 'usuarios:perfil' username=request.user.username %}" class="btn btn-primary">Ver perfil</a>
                     {% if request.user.infoextra.avatar %}
                     <img src="{{ request.user.infoextra.avatar.url }}" width="35" height="35">
                     {% else %}
