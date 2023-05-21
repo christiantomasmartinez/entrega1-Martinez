@@ -7,7 +7,6 @@ from usuarios.models import InfoExtra
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView
 
 
 
@@ -31,8 +30,8 @@ def registro(request):
     if request.method == 'POST':
         formulario = FormularioRegistro(request.POST)
         if formulario.is_valid():
-            usuario = formulario.save()  # Guardar el usuario
-            InfoExtra.objects.get_or_create(user=usuario)  # Crear el objeto InfoExtra para el usuario
+            usuario = formulario.save()
+            InfoExtra.objects.get_or_create(user=usuario)
             return redirect('usuarios:login')
         else:
             return render(request, 'usuarios/registro.html', {'form': formulario})
@@ -70,7 +69,6 @@ def perfil_usuario(request, username):
 
 
 def editar_descripcion(request, username):
-    # Obtener el perfil del usuario actual
     perfil = get_object_or_404(InfoExtra, user__username=username)
 
     if request.method == 'POST':
@@ -89,7 +87,6 @@ from usuarios.models import InfoExtra
 
 
 def editar_enlace(request, username):
-    # Obtener el perfil del usuario actual
     perfil = get_object_or_404(InfoExtra, user__username=username)
 
     if request.method == 'POST':

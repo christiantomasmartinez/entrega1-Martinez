@@ -1,16 +1,16 @@
 from django.urls import path
-from inicio import views
+from .views import *
 
 app_name = 'inicio'
 
 urlpatterns = [
-    path('', views.mi_vista, name='inicio'),
-    path('about/', views.about, name='about'),
-    path('agregar/', views.agregar_vehiculo, name='agregar_vehiculo'),
-    path('editar/<int:id_vehiculo>/', views.editar_vehiculo, name='editar_vehiculo'),
-    path('eliminar/<int:id_vehiculo>/', views.eliminar_vehiculo, name='eliminar_vehiculo'),
-    path('lista-vehiculos/', views.lista_vehiculos, name='lista_vehiculos'),
-    path('quejas/', views.lista_quejas, name='lista_quejas'),
-    path('quejas/agregar/', views.agregar_queja, name='agregar_queja'),
-    path('vehiculo/<int:id_vehiculo>/', views.detalle_vehiculo, name='detalle_vehiculo'),
+    path('', IndexView.as_view(), name='inicio'),
+    path('about/', AboutView.as_view(), name='about'),
+    path('lista_vehiculos/', ListaVehiculosView.as_view(), name='lista_vehiculos'),
+    path('agregar_vehiculo/', AgregarVehiculoView.as_view(), name='agregar_vehiculo'),
+    path('editar_vehiculo/<int:id_vehiculo>/', EditarVehiculoView.as_view(), name='editar_vehiculo'),
+    path('eliminar_vehiculo/<int:id_vehiculo>/', EliminarVehiculoView.as_view(), name='eliminar_vehiculo'),
+    path('detalle_vehiculo/<int:id_vehiculo>/', DetalleVehiculoView.as_view(), name='detalle_vehiculo'),
+    path('lista_quejas/', ListaQuejasView.as_view(), name='lista_quejas'),
+    path('agregar_queja/', AgregarQuejaView.as_view(), name='agregar_queja'),
 ]
